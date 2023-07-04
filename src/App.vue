@@ -1,3 +1,17 @@
+<template>
+  <header>
+    <h1>Employees</h1>
+  </header>
+  <main>
+    <EmployeeCard v-for="employee in employees" :employee="employee" :key="employee.id" />
+  </main>
+  <footer>
+    <button v-for="i in pages" :key="i" @click="handleClick">
+      {{ i }}
+    </button>
+  </footer>
+</template>
+
 <script setup lang="ts">
 import axios from 'axios';
 import { ref, onMounted } from 'vue'
@@ -5,28 +19,32 @@ import { IEmployees } from './models/IEmployees';
 import EmployeeCard from './components/EmployeeCard.vue'
 
   const employees = ref<IEmployees[]>([])
+  const pages = ref<number>(0)
   const BASE_URL: string = 'https://reqres.in/api/users'
+  const PAGE_URL: string = 'https://reqres.in/api/users?page='
 
-  const fetchData = async (): Promise<IEmployees[]> => {
-    let response = await axios.get(`${BASE_URL}`);
+  const fetchData = async (url: string): Promise<IEmployees[]> => {
+    let response = await axios.get(`${url}`);
     return response.data.data
   };
 
+  const fetchPages = async (): Promise<number> => {
+    let response = await axios.get(`${BASE_URL}`);
+    return response.data.total_pages
+  };
+
+  const handleClick = async (e: Event) => {
+    let pageNumber: string = ((e.target as HTMLInputElement).innerHTML)
+    employees.value = await fetchData(PAGE_URL+pageNumber)
+  }
+
   onMounted(async () => {
-    employees.value = await fetchData()
-    console.log(employees.value)
+    employees.value = await fetchData(BASE_URL)
+    pages.value = await fetchPages()
   });
+  
 
 </script>
-
-<template>
-  <header>
-    <h1>Buisness AB</h1>
-  </header>
-  <main>
-    <EmployeeCard v-for="employee in employees" :employee="employee" :key="employee.id" />
-  </main>
-</template>
 
 <style scoped>
 
@@ -39,7 +57,13 @@ import EmployeeCard from './components/EmployeeCard.vue'
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    margin-bottom: 1rem;
   }
+
+  button {
+    margin-right: 1rem;
+  }
+
   .logo {
     height: 6em;
     padding: 1.5em;

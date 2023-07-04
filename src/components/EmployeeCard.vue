@@ -1,13 +1,3 @@
-<script setup lang='ts'>
-import { IEmployees } from '../models/IEmployees';
-
-  interface IEmployeeCardProps {
-    employee: IEmployees;
-  }
-
-  defineProps<IEmployeeCardProps>();
-</script>
-
 <template>
   <div class="employeeCard">
     <img :src="employee.avatar" :alt="employee.first_name" />
@@ -17,6 +7,16 @@ import { IEmployees } from '../models/IEmployees';
   </div>
 
 </template>
+
+<script setup lang='ts'>
+import { IEmployees } from '../models/IEmployees';
+
+  interface IEmployeeCardProps {
+    employee: IEmployees;
+  }
+
+  defineProps<IEmployeeCardProps>();
+</script>
 
 <style scoped>
 
@@ -40,6 +40,8 @@ hr {
 }
 
 img {
+  aspect-ratio: 1 / 1;
+  min-height: 125px;
   border-radius: 50%;
 }
 
