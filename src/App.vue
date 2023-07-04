@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { ref } from 'vue'
-import { IEmployees } from "./models/IEmployees";
+import { ref, onMounted } from 'vue'
+import { IEmployees } from './models/IEmployees';
+import EmployeeCard from './components/EmployeeCard.vue'
 
   const employees = ref<IEmployees[]>([])
   const BASE_URL: string = 'https://reqres.in/api/users'
 
   const fetchData = async (): Promise<IEmployees[]> => {
     let response = await axios.get(`${BASE_URL}`);
-    return response.data
+    return response.data.data
   };
 
-  employees.value = await fetchData()
-
-
-  console.log(employees.value)
+  onMounted(async () => {
+    employees.value = await fetchData()
+    console.log(employees.value)
+  });
 
 </script>
 
 <template>
-  <p>hej</p>
+  <EmployeeCard v-for="employee in employees" :employee="employee" :key="employee.id" />
 </template>
 
 <style scoped>
