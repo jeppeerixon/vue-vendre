@@ -28,11 +28,13 @@ import EmployeeCard from './components/EmployeeCard.vue'
   const fetchData = async (url: string): Promise<IEmployees[]> => {
     try {
       let response = await axios.get(`${url}`);
+      fetchSuccess = true;
       return response.data.data
     }
     catch(error){
       console.log(error)
       fetchSuccess = false;
+      return []
     };
     
   };
