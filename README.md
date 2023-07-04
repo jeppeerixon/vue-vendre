@@ -2,7 +2,7 @@
 Code assigment for internship at Vendre.
 
 ## Link to live project
-
+(https://jeppeerixon.github.io/vue-vendre/)
 
 ## To run the app locally
 
