@@ -3,7 +3,8 @@
     <h1>Employees</h1>
   </header>
   <main>
-    <EmployeeCard v-for="employee in employees" :employee="employee" :key="employee.id" />
+    <EmployeeCard v-if="fetchSuccess" v-for="employee in employees" :employee="employee" :key="employee.id" />
+    <div v-else>Failed to fetch data... please come back later!</div>
   </main>
   <footer>
     <button v-for="i in pages" :key="i" @click="handleClick">
@@ -22,10 +23,18 @@ import EmployeeCard from './components/EmployeeCard.vue'
   const pages = ref<number>(0)
   const BASE_URL: string = 'https://reqres.in/api/users'
   const PAGE_URL: string = 'https://reqres.in/api/users?page='
+  let fetchSuccess: boolean = true;
 
   const fetchData = async (url: string): Promise<IEmployees[]> => {
-    let response = await axios.get(`${url}`);
-    return response.data.data
+    try {
+      let response = await axios.get(`${url}`);
+      return response.data.data
+    }
+    catch(error){
+      console.log(error)
+      fetchSuccess = false;
+    };
+    
   };
 
   const fetchPages = async (): Promise<number> => {

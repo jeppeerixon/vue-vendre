@@ -2,7 +2,7 @@
   <div class="employeeCard">
     <img :src="employee.avatar" :alt="employee.first_name" />
     <hr>
-    <h3>{{ employee.first_name }} {{ employee.last_name }}</h3>  
+    <h5>{{ employee.first_name }} {{ employee.last_name }}</h5>  
     <button><a :href="'mailto:' + employee.email">Contact</a></button>
   </div>
 
@@ -32,6 +32,10 @@ import { IEmployees } from '../models/IEmployees';
   box-shadow: 5px 5px 8px 1px rgba(0, 0, 0, 0.1);
 }
 
+h5 {
+  margin: 0.5rem;
+}
+
 hr {
   width: 100%;
   height: 0.15rem;
@@ -41,7 +45,7 @@ hr {
 
 img {
   aspect-ratio: 1 / 1;
-  min-height: 125px;
+  height: 128px;
   border-radius: 50%;
 }
 
