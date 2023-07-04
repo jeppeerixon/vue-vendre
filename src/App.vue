@@ -20,10 +20,26 @@ import EmployeeCard from './components/EmployeeCard.vue'
 </script>
 
 <template>
-  <EmployeeCard v-for="employee in employees" :employee="employee" :key="employee.id" />
+  <header>
+    <h1>Buisness AB</h1>
+  </header>
+  <main>
+    <EmployeeCard v-for="employee in employees" :employee="employee" :key="employee.id" />
+  </main>
 </template>
 
 <style scoped>
+
+  header {
+    display: flex;
+    align-items: start;
+  }
+
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
   .logo {
     height: 6em;
     padding: 1.5em;
